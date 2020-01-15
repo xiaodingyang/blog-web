@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+    />
+    <meta name="format-detection" content="email=no,telephone=no" />
+    <meta name="x5-fullscreen" content="true" />
+    <meta name="full-screen" content="yes" />
+    <meta
+      name="description"
+      content="肖定阳(xiaodingyang)，笔名Silence，前端技术分享以及生活随笔，包含：技术，JavaScript，css3，Node.js，React.js，Vue.js，生活，个人相册，等等。欢迎造访..."
+    />
+    <meta
+      name="keywords"
+      content="xiaodingyang，前端，JavaScript，css3，Node.js，React.js，Vue.js，博客，生活，技术，讨论，"
+    />
+    <link rel="stylesheet" href="../src/index.css" />
+    <link
+      rel="stylesheet"
+      href="http://at.alicdn.com/t/font_1495977_nlq0ym840ap.css"
+    />
+
+    <title>SILENCE的随笔</title>
+    <style id="appLoadingStyle">
+      #appLoading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+        background: #2196f3;
+      }
+
+      .transition-loader-inner {
+        transform: translateY(-50%);
+        top: 40%;
+        position: absolute;
+        width: 100vw;
+        color: #fff;
+        overflow: hidden;
+        /*padding: 0 4rem;*/
+        text-align: center;
+      }
+      .transition-loader-inner div {
+        font-size: 30px;
+        padding: 0.5rem;
+        opacity: 0;
+        display: inline-block;
+      }
+      /*.transition-loader-inner div:after {*/
+      /*font-family: FontAwesome;*/
+      /*content: '\f111';*/
+      /*}*/
+
+      .transition-loader-inner div:nth-child(1) {
+        -webkit-animation: loader 3s 700ms infinite ease-in-out;
+        animation: loader 3s 700ms infinite ease-in-out;
+      }
+
+      .transition-loader-inner div:nth-child(2) {
+        -webkit-animation: loader 3s 600ms infinite ease-in-out;
+        animation: loader 3s 600ms infinite ease-in-out;
+      }
+
+      .transition-loader-inner div:nth-child(3) {
+        -webkit-animation: loader 3s 500ms infinite ease-in-out;
+        animation: loader 3s 500ms infinite ease-in-out;
+      }
+
+      .transition-loader-inner div:nth-child(4) {
+        -webkit-animation: loader 3s 400ms infinite ease-in-out;
+        animation: loader 3s 400ms infinite ease-in-out;
+      }
+
+      .transition-loader-inner div:nth-child(5) {
+        -webkit-animation: loader 3s 300ms infinite ease-in-out;
+        animation: loader 3s 300ms infinite ease-in-out;
+      }
+      .transition-loader-inner div:nth-child(6) {
+        -webkit-animation: loader 3s 200ms infinite ease-in-out;
+        animation: loader 3s 200ms infinite ease-in-out;
+      }
+      .transition-loader-inner div:nth-child(7) {
+        -webkit-animation: loader 3s 100ms infinite ease-in-out;
+        animation: loader 3s 100ms infinite ease-in-out;
+      }
+
+      @keyframes loader {
+        0% {
+          opacity: 0;
+          transform: translateX(-300px) scale(1);
+        }
+        33% {
+          opacity: 1;
+          transform: translateX(0px) scale(2);
+        }
+        66% {
+          opacity: 1;
+          transform: translateX(0px) scale(1);
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(300px) scale(2);
+        }
+      }
+      @-webkit-keyframes loader {
+        0% {
+          opacity: 0;
+          -webkit-transform: translateX(-300px);
+        }
+        33% {
+          opacity: 1;
+          -webkit-transform: translateX(0px);
+        }
+        66% {
+          opacity: 1;
+          -webkit-transform: translateX(0px);
+        }
+        100% {
+          opacity: 0;
+          -webkit-transform: translateX(300px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="appLoading">
+      <div class="transition-loader-inner">
+        <div>S</div>
+        <div>I</div>
+        <div>L</div>
+        <div>E</div>
+        <div>N</div>
+        <div>C</div>
+        <div>E</div>
+      </div>
+    </div>
+  </body>
+
+  <script
+    async
+    src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"
+  ></script>
+  <script>
+    window.onload = function() {
+      document.querySelector("#appLoading").remove();
+      document.querySelector("#appLoadingStyle").remove();
+    };
+  </script>
+</html>
