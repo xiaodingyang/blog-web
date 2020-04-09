@@ -41,11 +41,11 @@ export const Style = styled.div`
       display: flex;
       .user {
         position: fixed;
-        min-width: 300px;
+        min-width: 280px;
         width: 15%;
         height: 400px;
         padding: 20px;
-        margin-right: 20px;
+        // margin-right: 20px;
         background: rgb(209, 75, 74);
         .img {
           width: 50%;
@@ -130,10 +130,10 @@ export const Style = styled.div`
         }
       }
       .content {
-        width: 70%;
-        margin-left: 30%;
+        // width: 70%;
+        margin-left: 26%;
         .item {
-          padding: 40px;
+          padding: 20px;
           background: rgb(51, 51, 51);
           margin-bottom: 20px;
           .title {
@@ -219,8 +219,8 @@ export const Style = styled.div`
             .time {
               position: relative;
               height: 30px;
-              width: 20%;
-              margin-right: 50px;
+              width: 22%;
+              margin-right: 20px;
               padding: 0 5px;
               line-height: 30px;
               background: rgb(209, 75, 74);
@@ -237,7 +237,7 @@ export const Style = styled.div`
               position: relative;
               width: 80%;
               border-left: 2px solid rgb(209, 75, 74);
-              padding: 0 20px 20px;
+              padding-left: 20px;
               margin-top: 10px;
               .dot {
                 position: absolute;
@@ -263,7 +263,7 @@ export const Style = styled.div`
                   margin: 10px 0;
                   line-height: 2;
                   span:nth-child(1) {
-                    width: 100px;
+                    width: 150px;
                   }
                   span:nth-child(2) {
                     color: #bcbcbc;

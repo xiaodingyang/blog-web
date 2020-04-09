@@ -181,7 +181,7 @@ export class index extends Component {
                                       ></InnerHtml>
                                     </div>
                                     <div className="project-description">
-                                      <span>项目技能：</span>
+                                      <span>项目简介：</span>
                                       <InnerHtml
                                         value={item.skills}
                                       ></InnerHtml>
