@@ -15,17 +15,25 @@ export class index extends Component {
         jobList: [],
       },
       experienceList: [],
-      touxiang: "",
-      qq: "",
-      wx: "",
+      headImg: "",
+      qqImg: "",
+      wxImg: "",
     };
   }
   componentDidMount() {
     getList().then((res) => {
+      let headImg = [];
+      let qqImg = [];
+      let wxImg = [];
+      res.forEach((item) => {
+        if (item.imgKey === "headImg") headImg = item.imgList[0].url;
+        if (item.imgKey === "qqImg") qqImg = item.imgList[0].url;
+        if (item.imgKey === "wxImg") wxImg = item.imgList[0].url;
+      });
       this.setState({
-        touxiang: res[0].otherImg.touxiang,
-        qq: res[0].otherImg.qq,
-        wx: res[0].otherImg.wx,
+        headImg,
+        qqImg,
+        wxImg,
       });
     });
     getResumeList().then((res) => {
@@ -56,7 +64,9 @@ export class index extends Component {
   }
 
   render() {
-    const { jsonList, touxiang, qq, wx, experienceList } = this.state;
+    const { jsonList, headImg, qqImg, wxImg, experienceList } = this.state;
+    console.log("experienceList", experienceList);
+
     return (
       <Style>
         <div className="bg"></div>
@@ -66,7 +76,7 @@ export class index extends Component {
               <div
                 className="img"
                 style={{
-                  background: `url(${touxiang}) no-repeat center/cover`,
+                  background: `url(${headImg}) no-repeat center/cover`,
                 }}
               ></div>
               <h2>SILENCE</h2>
@@ -79,13 +89,13 @@ export class index extends Component {
                 <div className="item">
                   <i className="iconfont icon-QQ"></i>
                   <div className="box">
-                    <img src={qq} alt="" />
+                    <img src={qqImg} alt="" />
                   </div>
                 </div>
                 <div className="item">
                   <i className="iconfont icon-weixin"></i>
                   <div className="box">
-                    <img src={wx} alt="" />
+                    <img src={wxImg} alt="" />
                   </div>
                 </div>
                 <div className="item">
@@ -161,44 +171,45 @@ export class index extends Component {
                 <div className="main">
                   {experienceList.length > 0 &&
                     experienceList.map((item, idx) => {
-                      return (
-                        <div className="job-item" key={idx}>
-                          <div className="time">
-                            <span>{item.timeList[0]}</span> -{" "}
-                            <span>{item.timeList[1]}</span>
-                          </div>
-                          <div className="job-content">
-                            <p className="dot"></p>
-                            <div className="company">{item.companyName}</div>
-                            <div className="project">
-                              {item.experience.map((item, idx) => {
-                                return (
-                                  <div className="project-item" key={idx}>
-                                    <div className="project-name">
-                                      <span>项目名称：</span>
-                                      <InnerHtml
-                                        value={item.projectName}
-                                      ></InnerHtml>
+                      if (item.experience)
+                        return (
+                          <div className="job-item" key={idx}>
+                            <div className="time">
+                              <span>{item.timeList[0]}</span> -{" "}
+                              <span>{item.timeList[1]}</span>
+                            </div>
+                            <div className="job-content">
+                              <p className="dot"></p>
+                              <div className="company">{item.companyName}</div>
+                              <div className="project">
+                                {item.experience.map((item, idx) => {
+                                  return (
+                                    <div className="project-item" key={idx}>
+                                      <div className="project-name">
+                                        <span>项目名称：</span>
+                                        <InnerHtml
+                                          value={item.projectName}
+                                        ></InnerHtml>
+                                      </div>
+                                      <div className="project-description">
+                                        <span>项目简介：</span>
+                                        <InnerHtml
+                                          value={item.skills}
+                                        ></InnerHtml>
+                                      </div>
+                                      <div className="job-description">
+                                        <span>项目职责：</span>
+                                        <InnerHtml
+                                          value={item.jobDescription}
+                                        ></InnerHtml>
+                                      </div>
                                     </div>
-                                    <div className="project-description">
-                                      <span>项目简介：</span>
-                                      <InnerHtml
-                                        value={item.skills}
-                                      ></InnerHtml>
-                                    </div>
-                                    <div className="job-description">
-                                      <span>项目职责：</span>
-                                      <InnerHtml
-                                        value={item.jobDescription}
-                                      ></InnerHtml>
-                                    </div>
-                                  </div>
-                                );
-                              })}
+                                  );
+                                })}
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      );
+                        );
                     })}
                 </div>
               </div>

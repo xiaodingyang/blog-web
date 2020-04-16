@@ -130,7 +130,7 @@ export const Style = styled.div`
         }
       }
       .content {
-        // width: 70%;
+        width: 100%;
         margin-left: 26%;
         .item {
           padding: 20px;
