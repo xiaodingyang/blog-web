@@ -39,17 +39,19 @@ export const Style = styled.div`
     color: #fff;
     .body {
       display: flex;
+      flex-direction: column;
       .user {
-        position: fixed;
-        min-width: 280px;
-        width: 15%;
+        // position: fixed;
+
+        // min-width: 280px;
+        width: 100%;
         height: 400px;
         padding: 20px;
-        // margin-right: 20px;
+        margin-top: 20px;
         background: rgb(209, 75, 74);
         .img {
-          width: 50%;
-          height: 40%;
+          width: 100px;
+          height: 100px;
           margin: auto;
           border-radius: 50%;
           overflow: hidden;
@@ -71,6 +73,8 @@ export const Style = styled.div`
         .concat {
           display: flex;
           justify-content: space-between;
+          width: 340px;
+          margin: auto;
           padding: 20px 0;
           .item {
             position: relative;
@@ -100,7 +104,7 @@ export const Style = styled.div`
             .box {
               opacity: 0;
               position: absolute;
-              bottom: 50px;
+              top: 50px;
               left: 50%;
               transform: translateX(-50%);
               padding: 0 5px;
@@ -111,7 +115,7 @@ export const Style = styled.div`
               transition: 0.5s;
               &:after {
                 position: absolute;
-                bottom: -20px;
+                top: -19px;
                 left: 50%;
                 transform: translate(-50%, -5%);
                 width: 0;
@@ -120,10 +124,11 @@ export const Style = styled.div`
                 border: 10px solid #fff;
                 border-left: 10px solid transparent;
                 border-right: 10px solid transparent;
-                border-bottom: 10px solid transparent;
+                border-top: 10px solid transparent;
               }
               img {
                 width: 100px;
+                height: 100px;
               }
             }
           }
@@ -131,7 +136,7 @@ export const Style = styled.div`
       }
       .content {
         width: 100%;
-        margin-left: 26%;
+        // margin-left: 26%;
         .item {
           padding: 20px;
           background: rgb(51, 51, 51);
@@ -276,7 +281,7 @@ export const Style = styled.div`
       }
     }
   }
-  @media (max-width: 479px) {
+  @media (max-width: 500px) {
     .bg {
       &::before {
         border-width: 50px;

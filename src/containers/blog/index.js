@@ -4,66 +4,75 @@ import { TopBanner } from "./style";
 import RightSlide from "./rightSlide";
 import { getBlogList } from "@/servers/blog";
 import Swiper from "components/swiper/swiper";
-import { getList } from "@/servers/imgs";
 import { getList as getBlogClassList } from "@/servers/blogClass";
 import TopDisplay from "@/components/topDisplay";
+import Loading from "@/components/loading/loading";
+import { getImgUrl } from "utils/utils";
 
 class Blog extends Component {
   constructor(...arg) {
     super(...arg);
     this.state = {
-      listData: [],
+      blogData: [],
+      newData: [],
       swiperImg: [],
-      originData: [],
+      loading: false,
     };
   }
   componentDidMount() {
-    getList().then((res) => {
-      let swiperImg = [];
-      res.forEach((item) => {
-        if (item.imgKey === "swiperImg")
-          swiperImg = item.imgList.map((item) => item.url);
-      });
-      this.setState({
-        swiperImg,
-      });
-    });
-    const listData = window.sessionStorage.getItem("blogList");
-    listData
-      ? this.setState({
-          listData: JSON.parse(listData),
-          originData: JSON.parse(listData),
-        })
-      : this.getBlogList();
+    let swiperImg = getImgUrl("swiperImg");
+    this.setState({ swiperImg });
+    this.getBlogList();
   }
   getBlogList = (data) => {
-    let listData = [];
-    getBlogClassList().then((res) => {
-      if (res) {
-        res.forEach((item) => {
-          getBlogList({ type: item.code }).then((res) => {
-            listData.push({
-              data: res,
-              title: item.name,
-              type: item.code,
+    this.setState({ loading: true });
+    if (data) {
+      getBlogList(data)
+        .then((res) => {
+          if (res) {
+            this.setBlogData(res);
+            this.setState({ loading: false });
+          }
+        })
+        .catch((err) => this.setState({ loading: false }));
+    } else {
+      getBlogList()
+        .then((res) => {
+          if (res) {
+            const newData = res.filter((item, idx) => idx < 3);
+            this.setBlogData(res);
+            this.setState({
+              newData,
+              loading: false,
             });
-            window.sessionStorage.setItem("blogList", JSON.stringify(listData));
-            this.setState({ listData, originData: listData });
-          });
-        });
-      }
-    });
+          }
+        })
+        .catch((err) => this.setState({ loading: false }));
+    }
   };
   clickTag = (type) => {
-    const listData =
-      type && this.state.originData
-        ? this.state.originData.filter((item) => type === item.type)
-        : this.state.originData;
-    this.setState({ listData });
+    this.getBlogList({ type });
+  };
+  //将博客数据重组为[{title: '标题, data: data}]格式
+  setBlogData = (data) => {
+    let blogData = [];
+    getBlogClassList().then((res) => {
+      res.forEach((code) => {
+        let arr = [];
+        data.forEach((item) => {
+          if (item.type === code.code) arr.push(item);
+        });
+        blogData.push({
+          title: code.name,
+          data: arr,
+        });
+      });
+      this.setState({ blogData });
+    });
   };
 
   render() {
-    const { swiperImg, listData, originData } = this.state;
+    const { swiperImg, blogData, newData, loading } = this.state;
     return (
       <TopBanner className="container">
         <TopDisplay></TopDisplay>
@@ -81,29 +90,29 @@ class Blog extends Component {
             </div>
 
             <div className=" blog-list" style={{ marginTop: "20px" }}>
-              {listData.map((item, idx) =>
-                item.data && item.data.length > 0 ? (
-                  <div className="blog-list-item" key={idx}>
-                    <div className="title">{item.title}</div>
-                    <div className="wrap">
-                      {item.data.map((data, idx) => (
-                        <BlogList key={idx} data={data}></BlogList>
-                      ))}
-                    </div>
+              {blogData.map((item, idx) => {
+                return (
+                  <div key={idx}>
+                    {item.data.length > 0 && (
+                      <div className="blog-list-item">
+                        <div className="title">{item.title}</div>
+                        <div className="wrap">
+                          {item.data.map((item, idx) => (
+                            <BlogList key={idx} data={item}></BlogList>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                ) : (
-                  ""
-                )
-              )}
+                );
+              })}
             </div>
           </div>
           <div className="base-right">
-            <RightSlide
-              newBlog={originData}
-              clickTag={this.clickTag}
-            ></RightSlide>
+            <RightSlide newBlog={newData} clickTag={this.clickTag}></RightSlide>
           </div>
         </div>
+        <Loading loading={loading}></Loading>
       </TopBanner>
     );
   }

@@ -2,11 +2,25 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Page1Style } from "./style";
 import Rain from "components/rain/rain";
+import { getList } from "@/servers/imgs";
+import { getImgUrl } from "utils/utils";
 export class Page1Content extends Component {
+  state = {
+    rain: "",
+  };
+  componentDidMount() {
+    getList().then((res) => {
+      window.sessionStorage.setItem("imgList", JSON.stringify(res));
+      let rain = getImgUrl("webHomeImg")[0];
+      this.setState({ rain });
+    });
+  }
   render() {
+    console.log("ggggg", this.state.rain);
+
     return (
       <Page1Style>
-        <Rain bg="https://xiaodingyang-1300707163.cos.ap-chengdu.myqcloud.com/myBlog/page1.jpg"></Rain>
+        <Rain bg={this.state.rain}></Rain>
         <div className="body container">
           <h1 className="step animated bounceInDown">Hello, I'm Silence.</h1>
           <h2 className="step animated bounceInLeft">

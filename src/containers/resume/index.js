@@ -3,6 +3,9 @@ import { Style } from "./style";
 import { getResumeList, getExperienceList } from "../../servers/resume";
 import { getList } from "@/servers/imgs";
 import InnerHtml from "@/components/innerHtml";
+import { getImgUrl } from "utils/utils";
+import Loading from "@/components/loading/loading";
+
 export class index extends Component {
   constructor(...arg) {
     super();
@@ -18,55 +21,65 @@ export class index extends Component {
       headImg: "",
       qqImg: "",
       wxImg: "",
+      loading: false,
     };
   }
   componentDidMount() {
-    getList().then((res) => {
-      let headImg = [];
-      let qqImg = [];
-      let wxImg = [];
-      res.forEach((item) => {
-        if (item.imgKey === "headImg") headImg = item.imgList[0].url;
-        if (item.imgKey === "qqImg") qqImg = item.imgList[0].url;
-        if (item.imgKey === "wxImg") wxImg = item.imgList[0].url;
-      });
-      this.setState({
-        headImg,
-        qqImg,
-        wxImg,
-      });
-    });
-    getResumeList().then((res) => {
-      const jsonList = {
-        aboutMe: res[0].aboutMe,
-        jobWant: [
-          { label: "期望职业：", value: res[0].expectedJob },
-          { label: "工作地区：", value: res[0].expectedAddress },
-          { label: "期望月薪：", value: res[0].expectedSalary },
-          { label: "目前状态：", value: res[0].currentStatus },
-        ],
-        schoolList: [
-          { label: "校名：", value: res[0].schoolName },
-          { label: "性质：", value: res[0].schoolNature },
-          { label: "荣誉：", value: res[0].schoolHonou },
-          { label: "经验：", value: res[0].jobExperience },
-        ],
-        skillList: res[0].skillList,
-      };
-      this.setState({ jsonList });
-    });
-    getExperienceList().then((res) => {
-      this.setState({ experienceList: res });
-    });
-    document
-      .querySelectorAll("divcourier")
-      .forEach((item) => (item.style.lineHeght = 0));
+    this.getList();
+    this.getResumeList();
+    this.getExperienceList();
   }
 
-  render() {
-    const { jsonList, headImg, qqImg, wxImg, experienceList } = this.state;
-    console.log("experienceList", experienceList);
+  getList = () => {
+    let headImg = getImgUrl("headImg")[0];
+    let qqImg = getImgUrl("qqImg")[0];
+    let wxImg = getImgUrl("wxImg")[0];
+    this.setState({ headImg, qqImg, wxImg });
+  };
+  getResumeList = () => {
+    this.setState({ loading: false });
+    getResumeList()
+      .then((res) => {
+        if (res) {
+          const jsonList = {
+            aboutMe: res[0].aboutMe,
+            jobWant: [
+              { label: "期望职业：", value: res[0].expectedJob },
+              { label: "工作地区：", value: res[0].expectedAddress },
+              { label: "期望月薪：", value: res[0].expectedSalary },
+              { label: "目前状态：", value: res[0].currentStatus },
+            ],
+            schoolList: [
+              { label: "校名：", value: res[0].schoolName },
+              { label: "性质：", value: res[0].schoolNature },
+              { label: "荣誉：", value: res[0].schoolHonou },
+              { label: "经验：", value: res[0].jobExperience },
+            ],
+            skillList: res[0].skillList,
+          };
+          this.setState({ jsonList, loading: false });
+        }
+      })
+      .catch((err) => this.setState({ loading: false }));
+  };
+  getExperienceList = () => {
+    this.setState({ loading: true });
+    getExperienceList()
+      .then((res) => {
+        if (res) this.setState({ experienceList: res, loading: false });
+      })
+      .catch((err) => this.setState({ loading: false }));
+  };
 
+  render() {
+    const {
+      jsonList,
+      headImg,
+      qqImg,
+      wxImg,
+      experienceList,
+      loading,
+    } = this.state;
     return (
       <Style>
         <div className="bg"></div>
@@ -215,6 +228,7 @@ export class index extends Component {
               </div>
             </div>
           </div>
+          <Loading loading={loading}></Loading>
         </div>
       </Style>
     );

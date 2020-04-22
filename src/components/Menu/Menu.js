@@ -117,15 +117,7 @@ export class Menue extends Component {
                   theme={this.props.theme}
                 >
                   {MenuMap.map((item) => {
-                    if (item.root === 1) {
-                      if (isSuper()) {
-                        return this.menu(item);
-                      } else {
-                        return "";
-                      }
-                    } else {
-                      return this.menu(item);
-                    }
+                    return this.menu(item);
                   })}
                 </Menu>
               </div>

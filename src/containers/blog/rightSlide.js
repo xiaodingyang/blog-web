@@ -1,17 +1,16 @@
 import React, { Component } from "react";
-import { Row, Col, Icon, Tag, Input } from "antd";
-import { getBlogList } from "@/servers/blog";
+import { Tag } from "antd";
+// import { getBlogList } from "@/servers/blog";
 import { getList } from "@/servers/blogClass";
 import { TopBanner } from "./style";
 import { Link } from "react-router-dom";
-const { Search } = Input;
+// const { Search } = Input;
 export class rightSlide extends Component {
   constructor(...arg) {
     super(...arg);
     this.state = {
       listData: [],
       tagList: [],
-      newList: [],
     };
   }
 
@@ -19,18 +18,13 @@ export class rightSlide extends Component {
     getList().then((res) => {
       this.setState({ tagList: res });
     });
-    getBlogList().then((res) => {
-      this.setState({ newList: res });
-    });
   }
   render() {
-    const newBlog = this.state.newList.filter((item, idx) => idx < 3);
-
     return (
       <TopBanner>
         <div className="base-right-item new-blog animated fadeInRight">
           <div className="line">最新文章</div>
-          {newBlog.map((item, idx) => {
+          {this.props.newBlog.map((item, idx) => {
             return (
               <div className="blog-item" key={idx}>
                 <div className="img">
@@ -40,7 +34,14 @@ export class rightSlide extends Component {
                       query: { id: item.id },
                     }}
                   >
-                    <img src={item.src[0].url} alt="" />
+                    <img
+                      src={
+                        item.src && item.src[0] && item.src[0].url
+                          ? item.src[0].url
+                          : ""
+                      }
+                      alt="暂无图片"
+                    />
                   </Link>
                 </div>
                 <div className="content">

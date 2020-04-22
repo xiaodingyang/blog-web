@@ -16,7 +16,11 @@ export class blogLists extends Component {
           <div className="img">
             <Link to={to}>
               <img
-                src={data.src[0].url}
+                src={
+                  data.src && data.src[0] && data.src[0].url
+                    ? data.src[0].url
+                    : ""
+                }
                 alt="暂无图片"
                 style={{ minHeight: "100px", width: "100%" }}
               />
