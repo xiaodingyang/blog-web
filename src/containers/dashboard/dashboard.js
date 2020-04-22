@@ -11,8 +11,9 @@ export default class Dashboard extends Component {
     bg: "",
   };
   componentDidMount() {
-    let bg = getImgUrl("appHomeBg")[0];
-    this.setState({ bg });
+    getImgUrl(["appHomeBg"]).then((res) => {
+      this.setState({ bg: res[0] });
+    });
   }
   render() {
     const isIndex =

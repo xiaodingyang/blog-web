@@ -31,10 +31,21 @@ export class index extends Component {
   }
 
   getList = () => {
-    let headImg = getImgUrl("headImg")[0];
-    let qqImg = getImgUrl("qqImg")[0];
-    let wxImg = getImgUrl("wxImg")[0];
-    this.setState({ headImg, qqImg, wxImg });
+    getImgUrl(["headImg", "qqImg", "wxImg"]).then((res) => {
+      let headImg = "";
+      let qqImg = "";
+      let wxImg = "";
+      res.forEach((item) => {
+        if (item.key === "headImg") headImg = item.url[0];
+        if (item.key === "qqImg") qqImg = item.url[0];
+        if (item.key === "wxImg") wxImg = item.url[0];
+      });
+      this.setState({
+        headImg,
+        qqImg,
+        wxImg,
+      });
+    });
   };
   getResumeList = () => {
     this.setState({ loading: false });
@@ -70,7 +81,6 @@ export class index extends Component {
       })
       .catch((err) => this.setState({ loading: false }));
   };
-
   render() {
     const {
       jsonList,
@@ -169,9 +179,9 @@ export class index extends Component {
                         </span>
                         {Array.from(new Array(10).keys()).map((data, idx) => {
                           return idx < item.value ? (
-                            <p className="on"></p>
+                            <p className="on" key={idx}></p>
                           ) : (
-                            <p></p>
+                            ""
                           );
                         })}
                       </div>

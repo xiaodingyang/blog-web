@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import Loadable from "react-loadable";
 import Loading from "components/loading/loading";
 import React from "react";
+import { getList } from "@/servers/imgs";
 
 /* 获取 userInfo 列表 */
 export function getUserInfo(obj) {
@@ -9,14 +10,26 @@ export function getUserInfo(obj) {
 }
 
 /* 解析图片 */
-export function getImgUrl(imgKey) {
-  const imgList = window.sessionStorage.getItem("imgList")
-    ? JSON.parse(window.sessionStorage.getItem("imgList"))
-    : [];
+export async function getImgUrl(imgKeyList = []) {
   let img = [];
-  imgList.forEach((item) => {
-    if (item.imgKey === imgKey) img = item.imgList.map((item) => item.url);
+  await getList().then((res) => {
+    if (res) {
+      res.forEach((item) => {
+        imgKeyList.forEach((key) => {
+          if (item.imgKey === key && imgKeyList.length === 1) {
+            img = item.imgList.map((item) => item.url);
+          }
+          if (item.imgKey === key && imgKeyList.length > 1) {
+            img.push({
+              key,
+              url: item.imgList.map((item) => item.url),
+            });
+          }
+        });
+      });
+    }
   });
+  console.log("img", img);
   return img;
 }
 

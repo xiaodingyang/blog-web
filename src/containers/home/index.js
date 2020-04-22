@@ -9,15 +9,11 @@ export class Page1Content extends Component {
     rain: "",
   };
   componentDidMount() {
-    getList().then((res) => {
-      window.sessionStorage.setItem("imgList", JSON.stringify(res));
-      let rain = getImgUrl("webHomeImg")[0];
-      this.setState({ rain });
+    getImgUrl(["webHomeImg"]).then((res) => {
+      this.setState({ rain: res[0] });
     });
   }
   render() {
-    console.log("ggggg", this.state.rain);
-
     return (
       <Page1Style>
         <Rain bg={this.state.rain}></Rain>

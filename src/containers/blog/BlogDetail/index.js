@@ -19,8 +19,6 @@ export class index extends Component {
   }
   componentDidMount() {
     this.setState({ loading: true });
-    console.log("this.props.location.query", this.props.location.query);
-
     if (this.props.location.query)
       window.sessionStorage.setItem(
         "detail",

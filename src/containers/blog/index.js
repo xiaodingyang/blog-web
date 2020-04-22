@@ -20,9 +20,10 @@ class Blog extends Component {
     };
   }
   componentDidMount() {
-    let swiperImg = getImgUrl("swiperImg");
-    this.setState({ swiperImg });
     this.getBlogList();
+    getImgUrl(["swiperImg"]).then((res) => {
+      this.setState({ swiperImg: res });
+    });
   }
   getBlogList = (data) => {
     this.setState({ loading: true });

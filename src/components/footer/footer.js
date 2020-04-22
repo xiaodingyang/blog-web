@@ -31,7 +31,9 @@ export class footer extends Component {
                   <p id="busuanzi_container_site_uv">
                     本站访客数 <span id="busuanzi_value_site_uv"></span> 人次
                   </p>
-                  <p>长安与故里 的博客 蜀ICP备19041187号-1</p>
+                  <p>
+                    长安归故里，故里有长安。 顾名长安与故里 蜀ICP备19041187号-1
+                  </p>
                 </div>
               </Col>
             </Row>
