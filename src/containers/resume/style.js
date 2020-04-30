@@ -73,7 +73,7 @@ export const Style = styled.div`
         .concat {
           display: flex;
           justify-content: space-between;
-          width: 340px;
+          width: 50%;
           margin: auto;
           padding: 20px 0;
           .item {
@@ -282,6 +282,9 @@ export const Style = styled.div`
     }
   }
   @media (max-width: 500px) {
+    .concat {
+      width: 100% !important;
+    }
     .bg {
       &::before {
         border-width: 50px;
@@ -308,7 +311,7 @@ export const Style = styled.div`
     .resume .body .content .job .job-item {
       display: block;
       .time {
-        width: 50%;
+        width: 70%;
       }
       .job-content {
         width: 100%;

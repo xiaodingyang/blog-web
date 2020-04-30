@@ -181,7 +181,7 @@ export class index extends Component {
                           return idx < item.value ? (
                             <p className="on" key={idx}></p>
                           ) : (
-                            ""
+                            <p key={idx}></p>
                           );
                         })}
                       </div>
