@@ -20,12 +20,13 @@ axios.interceptors.request.use((config) => {
 
 // response 拦截器
 axios.interceptors.response.use((response) => {
+    console.log('ddddd',response);
   if (response.status === 200) {
-    if (response.data.status && response.data.status !== 200) {
-      message.error(response.data.message);
-      store.dispatch(other.setLoading(false));
-      return null;
-    }
+    // if (response.data.status && response.data.status !== 200) {
+    //   message.error(response.data.message);
+    //   store.dispatch(other.setLoading(false));
+    //   return null;
+    // }
     return response.data.data || response.data;
   } else {
     // 非200请求抱错

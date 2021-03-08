@@ -28,7 +28,8 @@ export class index extends Component {
     getBlogList(id)
       .then((res) => {
         if (res) {
-          this.setState({ detailData: res[0], loading: false }, () => {
+            console.log('aaaa',res);
+          this.setState({ detailData: res.list[0], loading: false }, () => {
             const topBar = document.querySelector(".for-toolbar");
             if (topBar) topBar.style.display = "none";
             const id = document.querySelectorAll("[id]");

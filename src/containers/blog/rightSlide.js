@@ -16,7 +16,8 @@ export class rightSlide extends Component {
 
   componentDidMount() {
     getList().then((res) => {
-      this.setState({ tagList: res });
+        console.log('res',res);
+      this.setState({ tagList: res.list });
     });
   }
   render() {

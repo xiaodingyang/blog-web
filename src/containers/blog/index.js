@@ -26,6 +26,7 @@ class Blog extends Component {
     });
   }
   getBlogList = (data) => {
+
     this.setState({ loading: true });
     if (data) {
       getBlogList(data)
@@ -40,8 +41,8 @@ class Blog extends Component {
       getBlogList()
         .then((res) => {
           if (res) {
-            const newData = res.filter((item, idx) => idx < 3);
-            this.setBlogData(res);
+            const newData = res.list.filter((item, idx) => idx < 3);
+            this.setBlogData(res.list);
             this.setState({
               newData,
               loading: false,
@@ -58,7 +59,7 @@ class Blog extends Component {
   setBlogData = (data) => {
     let blogData = [];
     getBlogClassList().then((res) => {
-      res.forEach((code) => {
+      res.list.forEach((code) => {
         let arr = [];
         data.forEach((item) => {
           if (item.type === code.code) arr.push(item);

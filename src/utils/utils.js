@@ -14,7 +14,7 @@ export async function getImgUrl(imgKeyList = []) {
   let img = [];
   await getList().then((res) => {
     if (res) {
-      res.forEach((item) => {
+      res.list.forEach((item) => {
         imgKeyList.forEach((key) => {
           if (item.imgKey === key && imgKeyList.length === 1) {
             img = item.imgList.map((item) => item.url);

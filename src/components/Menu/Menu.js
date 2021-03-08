@@ -61,10 +61,10 @@ export class Menue extends Component {
     getList().then((res) => {
       let navImg = [];
       let headImg = [];
-      res.forEach((item) => {
+      res.list.forEach((item) => {
         if (item.imgKey === "navImg")
           navImg = item.imgList.map((item) => item.url);
-        if (item.imgKey === "headImg") headImg = item.imgList[0].url;
+        // if (item.imgKey === "headImg") headImg = item.imgList[0].url;
       });
       this.setState({
         navImg,
